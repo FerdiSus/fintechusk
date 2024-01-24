@@ -4,7 +4,8 @@ import {
     Button,
     TouchableOpacity,
     TextInput,
-    RefreshControl
+    RefreshControl,
+    Alert
 
   } from "react-native";
   import React, { useEffect, useState,  } from "react";
@@ -21,8 +22,9 @@ import {
     const [dataBank, setdataBank] = useState([]);
     const [roles, setRoles] = useState([]);
     const [selectedUser, setselectedUser] = useState(0);
+    const [selectedUsertop, setselectedUsertop] = useState(0);
     const [debit, setdebit] = useState("");
-    const [debitBank, setdebitBank] = useState("");
+    const [credit, setcredit] = useState("");
     const [refreshing, setRefreshing] = useState(false);
   
     const formatToRp = (value) => {
@@ -59,17 +61,55 @@ import {
   
   
     const withDraw = async () => {
-      const token = await AsyncStorage.getItem("token");
-      await axios.post(
-        `${API_BASE_URL}withdraw`,
-        {
-          users_id: parseInt(selectedUser),
-          debit: parseInt(debit),
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setdebit("");
-      getDataBank();
+      if (selectedUser == "" || debit == "") {
+        Alert.alert("Input Tidak Boleh Kosong!", "Silahkan Isi Input Terlebih Dahulu" , [
+          {
+             text: "OK",
+             onPress:  () => {
+                return
+             }
+          }
+        ])
+      }
+      else{
+        const token = await AsyncStorage.getItem("token");
+        await axios.post(
+          `${API_BASE_URL}withdraw`,
+          {
+            users_id: parseInt(selectedUser),
+            debit: parseInt(debit),
+          },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setdebit("");
+        getDataBank();
+      }
+    };
+
+    const TopUpBank = async () => {
+      if (selectedUsertop == "" || credit == "") {
+        Alert.alert("Input Tidak Boleh Kosong!", "Silahkan Isi Input Terlebih Dahulu" , [
+          {
+             text: "OK",
+             onPress:  () => {
+                return
+             }
+          }
+        ])
+      }
+      else{
+        const token = await AsyncStorage.getItem("token");
+        await axios.post(
+          `${API_BASE_URL}topup-bank`,
+          {
+            users_id: parseInt(selectedUsertop),
+            credit: parseInt(credit),
+          },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setcredit("");
+        getDataBank();
+      }
     };
   
     const logout = async () => {
@@ -136,7 +176,7 @@ import {
                 </View>
               </View>
             </View>
-            <View className="flex flex-col justify-center items-center w-ful bg-white py-10">
+            <View className="flex flex-col justify-center items-center  bg-white py-10 rounded-xl">
                   <Text className="mt-5 font-bold text-2xl">Penarikan Tunai</Text>
                   <View>
                     <Picker
@@ -163,7 +203,37 @@ import {
                     placeholder="nominal"
                   />
                   <TouchableOpacity className="border py-2 px-5 rounded-lg bg-blue-400 mt-2" onPress={withDraw}>
-                    <FontAwesome name="tasks" size={24} color="white"/>
+                    <FontAwesome name="address-card-o" size={24} color="white"/>
+                  </TouchableOpacity>
+            </View>
+            <View className="flex flex-col justify-center items-center  bg-slate-200 py-10 mt-7 rounded-xl">
+                  <Text className="mt-5 font-bold text-2xl">Top Up User</Text>
+                  <View>
+                    <Picker
+                      style={{ width: 200 }}
+                      selectedValue={selectedUsertop}
+                      onValueChange={(e) => setselectedUsertop(e)}
+                    >
+                      <Picker.Item label="Select User"  value="0" />
+                      {roles.data.map((value, index) => (
+                        <Picker.Item
+                          label={value.name}
+                          value={value.id}
+                          key={index}
+                        />
+                      ))}
+                    </Picker>
+                  </View>
+  
+                  <TextInput
+                    keyboardType="numeric"
+                    value={credit}
+                    onChangeText={(e) => setcredit(e)}
+                    className="h-12 rounded-md px-6 mb-4 text-lg bg-white w-1/2"
+                    placeholder="nominal"
+                  />
+                  <TouchableOpacity className="border py-2 px-5 rounded-lg bg-blue-400 mt-2" onPress={TopUpBank}>
+                    <FontAwesome name="money" size={24} color="white"/>
                   </TouchableOpacity>
                 </View>
           </View>

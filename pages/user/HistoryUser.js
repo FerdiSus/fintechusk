@@ -141,12 +141,14 @@ import {
                 ))}
               </View>
   
-              <View className="bg-white p-4 rounded-lg mb-4 w-full h-full mt-4">
+              <View className="bg-white p-4 rounded-lg mt-4">
                 <Text className="mb-2">Riwayat Pembelian Harian</Text>
                 {historyPembelian.map((value, index) => (
                   <ExpandableCardUser data={value} key={index} />
                 ))}
-                <Button title="Hapus Riwayat" onPress={clearHistory} />
+                <TouchableOpacity className="p-3 rounded-lg bg-blue-400 flex items-center"  onPress={clearHistory}>
+                  <Text className="font-bold text-md text-white">Hapus History</Text>
+                </TouchableOpacity>
               </View>
             </View>
             </>

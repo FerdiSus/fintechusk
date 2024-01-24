@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     RefreshControl,
     ScrollView,
+    Alert,
   } from "react-native";
   import React, { useEffect, useState } from "react";
   import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -52,6 +53,16 @@ import { FontAwesome } from "@expo/vector-icons";
         getDataHistory();
         navigation.navigate("HomeUser", { getDataSiswaCallBack: seconds });
       } catch (error) {
+        Alert.alert(
+          "kerjang kosong",
+          "isi keranjang",[
+          {
+            text: "ok",
+            onPress: () => {
+              return
+            }
+          }
+        ])
         console.log(error);
       }
     };
@@ -145,7 +156,7 @@ import { FontAwesome } from "@expo/vector-icons";
                   }
                 >
                   <View className="flex flex-row items-center justify-between">
-                  <Text className="text-black text-xs">Total Price</Text>
+                  <Text className="text-black text-xs font-semibold">Total Price</Text>
                     <Text className="text-black text-xl text-end">
                       {formatToRp(dataHistory.totalPrice ?? "")}
                     </Text>
@@ -158,7 +169,9 @@ import { FontAwesome } from "@expo/vector-icons";
                     {formatToRp(dataHistory.difference)}
                   </Text>    
                 ) : (
-                  <Button title="buy" onPress={payProduct} />
+                <TouchableOpacity className="p-3 rounded-lg bg-blue-400 flex items-center"  onPress={payProduct}>
+                  <Text className="font-bold text-md text-white">Buy</Text>
+                </TouchableOpacity>
                 )}
               </View>
             </View>

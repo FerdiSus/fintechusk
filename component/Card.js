@@ -110,12 +110,29 @@ const Card = ({
             </TouchableOpacity>
             </View>
             <View className="flex">
-            <TouchableOpacity className="py-2 px-10 border border-slate-800 rounded-lg bg-red-400" onPress={() => deleteProduct(id)} >
+            <TouchableOpacity className="py-2 px-10 border border-slate-800 rounded-lg bg-red-400"
+             onPress={() =>
+              Alert.alert(
+                "Peringatan !",
+                "Yakin hapus Produk ini?",
+                [
+                {
+                  text: "cancel",
+                  style: "cancel"
+                },
+                {
+                  text: "OK",
+                  onPress: () => deleteProduct(id)
+                },
+                ]
+              )
+             }
+               >
                 <Text className="text-white font-bold text-sm">Delete</Text>
             </TouchableOpacity>
             </View>
           </View>
-        )}
+          )}
       </View>
     </View>
   );
