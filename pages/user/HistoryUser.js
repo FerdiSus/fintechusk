@@ -38,8 +38,8 @@ import {
           Authorization: `Bearer ${token}`,
         },
       });
-      setwalletSelesai(response.data.walletSelesai);
-      setwalletProcess(response.data.walletProcess);
+      setwalletSelesai(response.data.walletfull);
+      // setwalletProcess(response.data.walletProcess);
       sethistoryPembelian(response.data.transactionsBayar);
       setloading(false);
     };
@@ -104,26 +104,7 @@ import {
           </View>
             <View className="flex flex-col h-full w-full p-4">
               <View className="bg-white p-4 rounded-lg mb-4">
-                <Text className="mb-2">Top up Process</Text>
-                {walletProcess.map((value, index) => (
-                  <View
-                    key={index}
-                    className={
-                      value.credit === 0 || value.credit === null
-                        ? `hidden`
-                        : `flex flex-row justify-between items-center border border-gray-300 rounded-lg p-3 mb-3`
-                    }
-                  >
-                    <Text>{formatToRp(value.credit)}</Text>
-                    <Text className="bg-blue-400 p-2 rounded">
-                      {value.status}
-                    </Text>
-                  </View>
-                ))}
-              </View>
-  
-              <View className="bg-white p-4 rounded-lg">
-                <Text className="mb-2">Top up Selesai</Text>
+                <Text className="mb-2">Top up History</Text>
                 {walletSelesai.map((value, index) => (
                   <View
                     key={index}
@@ -134,8 +115,27 @@ import {
                     }
                   >
                     <Text>{formatToRp(value.credit)}</Text>
-                    <Text className="p-2 rounded">
-                     <FontAwesome name="check-circle"  size={24} color="green"/>
+                    <Text className={value.status === 'selesai'?`border p-2 rounded shadow-xl bg-green-100`:'border bg-yellow-400 p-2 rounded'}>
+                      {value.status}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+  
+              <View className="bg-white p-4 rounded-lg">
+                <Text className="mb-2">Withdraw History</Text>
+                {walletSelesai.map((value, index) => (
+                  <View
+                    key={index}
+                    className={
+                      value.debit === 0 || value.debit === null
+                        ? `hidden`
+                        : `flex flex-row justify-between items-center border border-gray-300 rounded-lg p-3 mb-3`
+                    }
+                  >
+                    <Text>{formatToRp(value.debit)}</Text>
+                    <Text className={value.status === 'selesai'?`border p-2 rounded shadow-xl bg-green-100`:'border bg-yellow-400 p-2 rounded'}>
+                      {value.status}
                     </Text>
                   </View>
                 ))}

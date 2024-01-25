@@ -11,6 +11,7 @@ import MainUser from "./pages/user/MainUser";
 import EditProduct from "./pages/kantin/product-action/EditProduct";
 import CreateProduct from "./pages/kantin/product-action/CreateProduct";
 import ReportPage from "./pages/ReportPage";
+import MainAdmin from "./pages/admin/MainAdmin";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -64,7 +65,11 @@ const App = () => {
           component={MainBank}
           options={{ headerShown: false }}
         />
-
+        <Stack.Screen
+          name="MainAdmin"
+          component={MainAdmin}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="MainUser"
           component={MainUser}
