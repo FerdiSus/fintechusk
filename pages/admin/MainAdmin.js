@@ -21,17 +21,6 @@ const MainAdmin = () => {
         }}
       />
       <Tab.Screen
-        name="ReportAdmin"
-        component={ReportPage}
-        options={{
-          headerShown: false,
-          tabBarLabel: "Report",
-          tabBarIcon: ({}) => (
-            <FontAwesome name="newspaper-o" size={22} color="black" />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="CategoryAdmin"
         component={CategoryAdmin}
         options={{
@@ -39,6 +28,17 @@ const MainAdmin = () => {
           tabBarLabel: "Category",
           tabBarIcon: ({}) => (
             <MaterialIcons name="category" size={24} color="black" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="ReportAdmin"
+        component={ReportPage}
+        options={{
+          headerShown: false,
+          tabBarLabel: "Report",
+          tabBarIcon: ({}) => (
+            <FontAwesome name="newspaper-o" size={22} color="black" />
           ),
         }}
       />

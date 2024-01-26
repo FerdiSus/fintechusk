@@ -12,6 +12,10 @@ import EditProduct from "./pages/kantin/product-action/EditProduct";
 import CreateProduct from "./pages/kantin/product-action/CreateProduct";
 import ReportPage from "./pages/ReportPage";
 import MainAdmin from "./pages/admin/MainAdmin";
+import CreateUser from "./pages/admin/user-action/CreateUser";
+import EditUser from "./pages/admin/user-action/EditUser";
+import EditCategory from "./pages/admin/category-action/EditCategory";
+import CreateCategory from "./pages/admin/category-action/CreateCategory";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -27,6 +31,9 @@ const App = () => {
           break;
         case "bank":
           navigationRef.current?.navigate("MainBank");
+          break;
+        case "admin":
+          navigationRef.current?.navigate("MainAdmin");
           break;
         default:
           navigationRef.current?.navigate("MainUser");
@@ -77,6 +84,10 @@ const App = () => {
         />
 
         <Stack.Screen name="EditProduct" component={EditProduct} />
+        <Stack.Screen name="EditCategory" component={EditCategory} />
+        <Stack.Screen name="CreateUser" component={CreateUser} />
+        <Stack.Screen name="CreateCategory" component={CreateCategory} />
+        <Stack.Screen name="EditUser" component={EditUser} />
         <Stack.Screen name="CreateProduct" component={CreateProduct} />
         <Stack.Screen name="ReportPage" component={ReportPage} />
       </Stack.Navigator>

@@ -1,8 +1,11 @@
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, TouchableOpacity, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { FontAwesome } from "@expo/vector-icons";
 import API_BASE_URL from "../../const/url";
+import CreateCategory from "./category-action/CreateCategory";
+import EditCategory from "./category-action/EditCategory";
 
 const CategoryAdmin = ({ navigation, route }) => {
   const [dataCategory, setdataCategory] = useState([]);
@@ -42,11 +45,10 @@ const CategoryAdmin = ({ navigation, route }) => {
       ) : (
         <View className="flex flex-col h-full w-full">
           <View className="flex flex-row justify-between items-center border-gray-300 border-b p-2 bg-white">
-            <Text>List of Category</Text>
-            <Button
-              title="Create Category"
-              onPress={() => navigation.navigate("CreateCategory")}
-            />
+            <Text className="font-bold text-2xl">List of Category</Text>
+            <TouchableOpacity className="mx-5" onPress={() => navigation.navigate(CreateCategory)}>
+                <FontAwesome name="plus-circle" size={30} color="black" />
+            </TouchableOpacity>
           </View>
           <View className="p-4">
             {dataCategory.map((value, index) => (
@@ -56,19 +58,30 @@ const CategoryAdmin = ({ navigation, route }) => {
               >
                 <Text>Category: {value.name}</Text>
                 <View className="flex flex-row">
-                  <Button
-                    title="Edit"
-                    onPress={() =>
+                  <TouchableOpacity className="bg-yellow-100 p-2 border rounded-lg mr-3" onPress={() =>
                       navigation.navigate("EditCategory", {
                         pid: value.id,
                         pname: value.name,
-                      })
-                    }
-                  />
-                  <Button
-                    title="Delete"
-                    onPress={() => deleteCategory(value.id)}
-                  />
+                      })}>
+                    <Text>Edit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity className="bg-red-100 p-2 border rounded-lg" onPress={() =>
+                  Alert.alert(
+                    "Peringatan !",
+                    "Yakin Hapus Category ini?",
+                    [
+                      {
+                        text: "Cancel",
+                        style: "cancel"
+                      },
+                      {
+                        text: "OK",
+                        onPress: () => deleteCategory(value.id)
+                      }
+                    ]
+                  )}>
+                    <Text>Delete</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             ))}
